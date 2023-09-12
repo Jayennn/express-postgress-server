@@ -1,0 +1,68 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model role {
+  id   Int    @id(map: "tb_role_pkey") @default(autoincrement())
+  name String @db.VarChar(25)
+  user user[]
+}
+
+model status {
+  id   String @id(map: "tb_status_pkey") @db.VarChar(12)
+  name String @db.VarChar(25)
+  task task[]
+  todo todo[]
+}
+
+model tag {
+  id       String     @id(map: "tb_category_pkey") @db.VarChar(25)
+  tag      String     @db.VarChar(25)
+  task_tag task_tag[]
+}
+
+model user {
+  id       Int    @id @default(autoincrement())
+  username String @unique(map: "uniq_username") @db.VarChar(12)
+  password String @db.VarChar(110)
+  role_id  Int
+  task     task[]
+  role     role   @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_role")
+}
+
+model task {
+  id          Int        @id(map: "tb_task_pkey") @default(autoincrement())
+  title       String     @db.VarChar(25)
+  description String
+  user_id     Int
+  date        DateTime   @default(now()) @db.Date
+  status_id   String     @db.VarChar(12)
+  status      status     @relation(fields: [status_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_status_id")
+  user        user       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+  task_tag    task_tag[]
+  todo        todo[]
+}
+
+model task_tag {
+  task_id Int
+  tag_id  String @db.VarChar(25)
+  tag     tag    @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_id")
+  task    task   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task_id")
+
+  @@id([task_id, tag_id], map: "tb_task_tag_pkey")
+}
+
+model todo {
+  id        Int    @id @default(autoincrement())
+  title     String @db.VarChar(25)
+  status_id String @db.VarChar
+  task_id   Int?
+  status    status @relation(fields: [status_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_status_id")
+  task      task?  @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task_id")
+}

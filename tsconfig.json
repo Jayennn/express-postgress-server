@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "rootDir": "src",
+    "rootDirs": ["./src/**"],
+    "allowImportingTsExtensions": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,"forceConsistentCasingInFileNames": true, 
+    "paths": {
+      "@router/*": ["./src/router/*"], 
+    },
+  },
+  "exclude": ["node_modules"]
+}
