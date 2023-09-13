@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+
 import { prisma } from "../../database/index.js";
 
 type objFieldType = {
@@ -43,7 +43,7 @@ const getTaskById = async (id: string, user_id: number) => {
 
 const getTasks = async (objfield: objFieldType) => {
 
-   const searchTitle: Prisma.taskWhereInput = objfield.title ? {
+   const searchTitle = objfield.title ? {
       OR: [
          {
             title: {

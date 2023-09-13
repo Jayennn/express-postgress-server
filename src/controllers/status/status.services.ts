@@ -1,18 +1,19 @@
-import { type Prisma } from '@prisma/client';
+
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../database/index.js";
 
 
 
 const getStatus = async (name: string) => {
 
-   const query: Prisma.statusFindManyArgs = name ? {
+   const query = name ? {
       where: {
          name: name
       }
    } : {}
 
    const status = await prisma.status.findMany({
-      ...query
+      ...query as Prisma.statusFindManyArgs
    })
 
    return status
