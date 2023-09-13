@@ -1,5 +1,4 @@
 
-import { Prisma } from "@prisma/client";
 import { prisma } from "../../database/index.js";
 
 
@@ -12,8 +11,9 @@ const getStatus = async (name: string) => {
       }
    } : {}
 
+   //@ts-ignore
    const status = await prisma.status.findMany({
-      ...query as Prisma.statusFindManyArgs
+      ...query 
    })
 
    return status
