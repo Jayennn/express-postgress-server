@@ -1,5 +1,5 @@
 import { type Prisma } from "@prisma/client"
-import prisma from "../../database"
+import { prisma } from "../../database/index.js";
 
 type objFieldType = {
    user_id: number,

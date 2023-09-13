@@ -1,7 +1,7 @@
 import Express, { Router } from "express";
 import {
    getStatus,
-} from "./status.services";
+} from "./status.services.js";
 const router: Router = Express.Router();
 
 router.get("/", async (req, res) => {

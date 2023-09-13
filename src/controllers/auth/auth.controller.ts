@@ -1,8 +1,8 @@
 import Express, { Router } from "express";
 const router: Router = Express.Router();
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { getAuthToken, getUser } from "./auth.services.ts";
-import { AuthenticatedRequest, cookieJwtAuth } from "../../middleware/cookieJwtAuth.ts";
+import { getAuthToken, getUser } from "./auth.services.js";
+import { AuthenticatedRequest, cookieJwtAuth } from "../../middleware/cookieJwtAuth.js";
 import multer from "multer";
 const upload = multer();
 

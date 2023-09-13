@@ -1,6 +1,6 @@
 import Express, { Router, NextFunction, Request, Response } from "express";
-import { AuthenticatedRequest, cookieJwtAuth } from "../../middleware/cookieJwtAuth";
-import { createTask, getTasks, getTaskById, updateTask, deleteTask } from "./tasks.services";
+import { AuthenticatedRequest, cookieJwtAuth } from "../../middleware/cookieJwtAuth.js";
+import { createTask, getTasks, getTaskById, updateTask, deleteTask } from "./tasks.services.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
 const router: Router = Express.Router();
 

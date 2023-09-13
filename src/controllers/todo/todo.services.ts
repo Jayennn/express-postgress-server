@@ -1,4 +1,4 @@
-import prisma from "../../database"
+import { prisma } from "../../database/index.js";
 
 type TodoType = {
    title: string,
