@@ -1,6 +1,5 @@
-import { Prisma } from "@prisma/client";
 import { prisma } from "../../database/index.js";
-import jwt from 'jsonwebtoken';
+
 
 const getUser = async () => {
    const user = await prisma.user.findMany()
