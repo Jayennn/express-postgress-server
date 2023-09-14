@@ -1,5 +1,5 @@
 import Express, { Router } from "express";
-import { getTags } from "./tags.services.js";
+import { getTags } from "./tags.services";
 const router: Router = Express.Router();
 
 

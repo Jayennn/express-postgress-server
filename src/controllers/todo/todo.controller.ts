@@ -1,6 +1,6 @@
 import Express, { Router } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { getTodo, updateTodo } from "./todo.services.js";
+import { getTodo, updateTodo } from "./todo.services";
 
 const router: Router = Express.Router();
 

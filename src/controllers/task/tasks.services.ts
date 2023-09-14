@@ -1,5 +1,5 @@
 
-import { prisma } from "../../database/index.js";
+import { prisma } from "../../database/index";
 
 type objFieldType = {
    user_id: number,

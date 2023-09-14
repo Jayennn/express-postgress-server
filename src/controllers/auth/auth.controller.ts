@@ -1,8 +1,8 @@
 import Express, { Router } from "express";
 const router: Router = Express.Router();
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { getAuthToken, getUser } from "./auth.services.js";
-import { AuthenticatedRequest, cookieJwtAuth } from "../../middleware/cookieJwtAuth.js";
+import { getAuthToken, getUser } from "./auth.services";
+import { AuthenticatedRequest, cookieJwtAuth } from "../../middleware/cookieJwtAuth";
 import multer from "multer";
 const upload = multer();
 
@@ -39,9 +39,6 @@ router.get('/', cookieJwtAuth, (req, res) => {
          username: decode.username
       });
    }
-
-   
-   
 })
 
 router.post("/", upload.any(),async (req, res) => {

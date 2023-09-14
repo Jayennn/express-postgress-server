@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
-import routes from "./routes/routes.js";
+import routes from "./routes/routes";
 
 let app: express.Application | undefined = undefined;
 const PORT = process.env.PORT || 3001;

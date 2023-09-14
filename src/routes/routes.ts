@@ -1,10 +1,10 @@
 import { Router } from "express";
-import taskController from '../controllers/task/tasks.controller.js';
-import authController from '../controllers/auth/auth.controller.js';
-import tagController from '../controllers/tag/tags.controller.js';
-import statusController from '../controllers/status/status.controller.js';
-import todoController from '../controllers/todo/todo.controller.js'
-import { cookieJwtAuth } from "../middleware/cookieJwtAuth.js";
+import taskController from '../controllers/task/tasks.controller';
+import authController from '../controllers/auth/auth.controller';
+import tagController from '../controllers/tag/tags.controller';
+import statusController from '../controllers/status/status.controller';
+import todoController from '../controllers/todo/todo.controller'
+import { cookieJwtAuth } from "../middleware/cookieJwtAuth";
 
 const api: Router = Router()
    .use("/tasks", cookieJwtAuth ,taskController)

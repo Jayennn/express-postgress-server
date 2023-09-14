@@ -1,4 +1,4 @@
-import { prisma } from "../../database/index.js";
+import { prisma } from "../../database/index";
 
 const getTags = async() => {
    const tasks = await prisma.tag.findMany();
