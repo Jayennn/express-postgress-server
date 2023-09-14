@@ -1,6 +1,9 @@
-import { prisma } from "../../database/index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteTask = exports.updateTask = exports.getTasks = exports.getTaskById = exports.createTask = void 0;
+const index_js_1 = require("../../database/index.js");
 const getTaskById = async (id, user_id) => {
-    const tasks = await prisma.task.findFirst({
+    const tasks = await index_js_1.prisma.task.findFirst({
         where: {
             id: parseInt(id),
             user_id: user_id
@@ -17,6 +20,7 @@ const getTaskById = async (id, user_id) => {
     });
     return tasks;
 };
+exports.getTaskById = getTaskById;
 const getTasks = async (objfield) => {
     const searchTitle = objfield.title ? {
         OR: [
@@ -27,7 +31,7 @@ const getTasks = async (objfield) => {
             }
         ]
     } : {};
-    const tasks = await prisma.task.findMany({
+    const tasks = await index_js_1.prisma.task.findMany({
         where: {
             user_id: objfield.user_id,
             ...searchTitle
@@ -47,8 +51,9 @@ const getTasks = async (objfield) => {
     });
     return tasks;
 };
+exports.getTasks = getTasks;
 const createTask = async (title, description, tag_id, user_id, todo) => {
-    const create = await prisma.task.create({
+    const create = await index_js_1.prisma.task.create({
         data: {
             title: title,
             description: description,
@@ -78,9 +83,10 @@ const createTask = async (title, description, tag_id, user_id, todo) => {
     });
     return create;
 };
+exports.createTask = createTask;
 const updateTask = async (task, id, user_id) => {
     console.log(task.status_id);
-    const existingStatus = prisma.status.findFirst({
+    const existingStatus = index_js_1.prisma.status.findFirst({
         where: {
             id: task.status_id
         }
@@ -88,7 +94,7 @@ const updateTask = async (task, id, user_id) => {
     if (!existingStatus) {
         throw new Error("Record to update status does not exist.");
     }
-    const updateTask = await prisma.task.update({
+    const updateTask = await index_js_1.prisma.task.update({
         where: {
             user_id,
             id: parseInt(id),
@@ -107,8 +113,9 @@ const updateTask = async (task, id, user_id) => {
     });
     return updateTask;
 };
+exports.updateTask = updateTask;
 const deleteTask = async (id, user_id) => {
-    const existingLaporan = await prisma.task.findFirst({
+    const existingLaporan = await index_js_1.prisma.task.findFirst({
         where: {
             user_id: user_id,
             id: parseInt(id)
@@ -118,17 +125,17 @@ const deleteTask = async (id, user_id) => {
         throw new Error("Record to delete does not exist.");
     }
     // Delete related task_tag entries
-    await prisma.task_tag.deleteMany({
+    await index_js_1.prisma.task_tag.deleteMany({
         where: {
             task_id: parseInt(id)
         }
     });
-    await prisma.todo.deleteMany({
+    await index_js_1.prisma.todo.deleteMany({
         where: {
             task_id: parseInt(id)
         }
     });
-    const task = await prisma.task.delete({
+    const task = await index_js_1.prisma.task.delete({
         where: {
             user_id: user_id,
             id: parseInt(id),
@@ -141,5 +148,5 @@ const deleteTask = async (id, user_id) => {
     });
     return task;
 };
-export { createTask, getTaskById, getTasks, updateTask, deleteTask };
+exports.deleteTask = deleteTask;
 //# sourceMappingURL=tasks.services.js.map

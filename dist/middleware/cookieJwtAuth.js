@@ -1,5 +1,11 @@
-import jwt from "jsonwebtoken";
-export const cookieJwtAuth = (req, res, next) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.cookieJwtAuth = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const cookieJwtAuth = (req, res, next) => {
     try {
         if (process.env.SECRET_KEY) {
             const header = req.headers['authorization'];
@@ -7,7 +13,7 @@ export const cookieJwtAuth = (req, res, next) => {
             if (typeof header !== 'undefined') {
                 const bearer = header.split(' ');
                 const authToken = bearer[1];
-                jwt.verify(authToken, process.env.SECRET_KEY, (err, payload) => {
+                jsonwebtoken_1.default.verify(authToken, process.env.SECRET_KEY, (err, payload) => {
                     if (err) {
                         return res.status(403).json({
                             message: err
@@ -32,4 +38,5 @@ export const cookieJwtAuth = (req, res, next) => {
         res.redirect("/");
     }
 };
+exports.cookieJwtAuth = cookieJwtAuth;
 //# sourceMappingURL=cookieJwtAuth.js.map

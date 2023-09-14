@@ -1,10 +1,15 @@
-import Express from "express";
-import jwt from "jsonwebtoken";
-import { getTodo, updateTodo } from "./todo.services.js";
-const router = Express.Router();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const todo_services_js_1 = require("./todo.services.js");
+const router = express_1.default.Router();
 router.get('/', async (req, res) => {
     try {
-        const todo = await getTodo();
+        const todo = await (0, todo_services_js_1.getTodo)();
         res.json({
             todo
         });
@@ -25,8 +30,8 @@ router.put('/:id', async (req, res) => {
     }
     try {
         const bearer = headers.split(" ");
-        const user = jwt.decode(bearer[1]);
-        const todo = await updateTodo(req.body, req.params.id, task_id);
+        const user = jsonwebtoken_1.default.decode(bearer[1]);
+        const todo = await (0, todo_services_js_1.updateTodo)(req.body, req.params.id, task_id);
         res.json({
             todo,
             message: "Success update"
@@ -38,5 +43,5 @@ router.put('/:id', async (req, res) => {
         });
     }
 });
-export default router;
+exports.default = router;
 //# sourceMappingURL=todo.controller.js.map

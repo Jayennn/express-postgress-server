@@ -1,10 +1,15 @@
-import Express from "express";
-const router = Express.Router();
-import jwt from 'jsonwebtoken';
-import { getAuthToken } from "./auth.services.js";
-import { cookieJwtAuth } from "../../middleware/cookieJwtAuth.js";
-import multer from "multer";
-const upload = multer();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const auth_services_js_1 = require("./auth.services.js");
+const cookieJwtAuth_js_1 = require("../../middleware/cookieJwtAuth.js");
+const multer_1 = __importDefault(require("multer"));
+const upload = (0, multer_1.default)();
 function generateAccessToken(id, username, role_id) {
     if (!process.env.SECRET_KEY) {
         return "";
@@ -14,11 +19,11 @@ function generateAccessToken(id, username, role_id) {
         username: username,
         role_id: role_id,
     };
-    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    return jsonwebtoken_1.default.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
 }
-router.get('/', cookieJwtAuth, (req, res) => {
+router.get('/', cookieJwtAuth_js_1.cookieJwtAuth, (req, res) => {
     console.log(req.cookies.token);
-    const decode = jwt.decode(req.cookies.token);
+    const decode = jsonwebtoken_1.default.decode(req.cookies.token);
     if (decode) {
         console.log({
             id: decode.id,
@@ -29,7 +34,7 @@ router.get('/', cookieJwtAuth, (req, res) => {
 });
 router.post("/", upload.any(), async (req, res) => {
     const { username, password } = req.body;
-    const user = await getAuthToken(username);
+    const user = await (0, auth_services_js_1.getAuthToken)(username);
     if (user?.password !== password || user?.username !== username) {
         return res.status(403).json({
             error: "invalid login"
@@ -58,5 +63,5 @@ router.post("/", upload.any(), async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
-export default router;
+exports.default = router;
 //# sourceMappingURL=auth.controller.js.map

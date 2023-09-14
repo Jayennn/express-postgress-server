@@ -1,22 +1,25 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import "dotenv/config";
-import routes from "./routes/routes.js";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+require("dotenv/config");
+const routes_js_1 = __importDefault(require("./routes/routes.js"));
 let app = undefined;
 const PORT = process.env.PORT || 3001;
-app = express();
-app.use(cookieParser());
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true
-}));
-// for parsing application/json
-app.use(express.json());
-// for parsing application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-app.use(routes);
-app.listen(Number(PORT), "0.0.0.0", () => {
+app = (0, express_1.default)();
+app.use((0, cookie_parser_1.default)());
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use(routes_js_1.default);
+app.get("/", async (req, res) => {
+    res.send("helloww");
+});
+app.listen(PORT, () => {
     console.log(`listen to ${PORT}`);
 });
 //# sourceMappingURL=app.js.map

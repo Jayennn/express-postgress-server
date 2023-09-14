@@ -1,7 +1,12 @@
-import Express from "express";
-import { createTask, getTasks, getTaskById, updateTask, deleteTask } from "./tasks.services.js";
-import jwt from "jsonwebtoken";
-const router = Express.Router();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const tasks_services_js_1 = require("./tasks.services.js");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const router = express_1.default.Router();
 router.post("/", async (req, res) => {
     const headers = req.headers['authorization'];
     const { title, description, tag_id, todo } = req.body;
@@ -12,8 +17,8 @@ router.post("/", async (req, res) => {
     }
     try {
         const bearer = headers.split(" ");
-        const user = jwt.decode(bearer[1]);
-        const tasks = await createTask(title, description, tag_id, user.id, todo);
+        const user = jsonwebtoken_1.default.decode(bearer[1]);
+        const tasks = await (0, tasks_services_js_1.createTask)(title, description, tag_id, user.id, todo);
         res.json({
             task: tasks
         });
@@ -34,8 +39,8 @@ router.get('/', async (req, res) => {
     }
     try {
         const bearer = headers.split(" ");
-        const user = jwt.decode(bearer[1]);
-        const tasks = await getTasks({
+        const user = jsonwebtoken_1.default.decode(bearer[1]);
+        const tasks = await (0, tasks_services_js_1.getTasks)({
             user_id: user.id,
             title: title
         });
@@ -58,8 +63,8 @@ router.get('/:id', async (req, res, next) => {
     }
     try {
         const bearer = headers.split(" ");
-        const user = jwt.decode(bearer[1]);
-        const tasks = await getTaskById(req.params.id, user.id);
+        const user = jsonwebtoken_1.default.decode(bearer[1]);
+        const tasks = await (0, tasks_services_js_1.getTaskById)(req.params.id, user.id);
         res.json({
             tasks
         });
@@ -81,8 +86,8 @@ router.put('/:id', async (req, res, next) => {
     }
     try {
         const bearer = headers.split(" ");
-        const user = jwt.decode(bearer[1]);
-        const tasks = await updateTask(req.body, req.params.id, user.id);
+        const user = jsonwebtoken_1.default.decode(bearer[1]);
+        const tasks = await (0, tasks_services_js_1.updateTask)(req.body, req.params.id, user.id);
         res.json({
             tasks,
             message: "success update"
@@ -101,8 +106,8 @@ router.delete('/:id', async (req, res) => {
     }
     try {
         const bearer = headers.split(" ");
-        const user = jwt.decode(bearer[1]);
-        await deleteTask(req.params.id, user.id);
+        const user = jsonwebtoken_1.default.decode(bearer[1]);
+        await (0, tasks_services_js_1.deleteTask)(req.params.id, user.id);
         res.json({
             message: "Success delete task"
         });
@@ -113,5 +118,5 @@ router.delete('/:id', async (req, res) => {
         });
     }
 });
-export default router;
+exports.default = router;
 //# sourceMappingURL=tasks.controller.js.map

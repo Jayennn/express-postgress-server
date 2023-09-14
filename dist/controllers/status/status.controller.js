@@ -1,10 +1,15 @@
-import Express from "express";
-import { getStatus, } from "./status.services.js";
-const router = Express.Router();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const status_services_js_1 = require("./status.services.js");
+const router = express_1.default.Router();
 router.get("/", async (req, res) => {
     const { name } = req.query;
     try {
-        const status = await getStatus(name);
+        const status = await (0, status_services_js_1.getStatus)(name);
         res.json({
             data: status,
         });
@@ -15,5 +20,5 @@ router.get("/", async (req, res) => {
         });
     }
 });
-export default router;
+exports.default = router;
 //# sourceMappingURL=status.controller.js.map
