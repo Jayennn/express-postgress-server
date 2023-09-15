@@ -20,7 +20,7 @@ app.get("/", async (req, res) => {
 })
 
 app.listen(PORT, () => {
-   console.log(`listen to ${PORT}`);
+   console.log(`Server listening on http://localhost:${PORT}`);
 });
 
 export default app;

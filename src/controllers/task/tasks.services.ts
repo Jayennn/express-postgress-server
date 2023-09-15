@@ -121,7 +121,7 @@ const createTask = async (
 
 const updateTask = async (task: taskType, id: string, user_id: number) => {
 
-   console.log(task.status_id)
+   console.log({task})
    const existingStatus = prisma.status.findFirst({
       where: {
          id: task.status_id
